@@ -28,3 +28,11 @@
 #include "misc/misc.h"
 
 #include "special/special.h"
+
+#include "dyh/pop.h"
+#include "dyh/push.h"
+#include "dyh/call.h"
+#include "dyh/ret.h"
+#include "dyh/je.h"
+#include "dyh/cmp.h"
+#include "dyh/test.h"

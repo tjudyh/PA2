@@ -8,6 +8,17 @@
 #define decode_a concat(decode_a_, SUFFIX)
 #define decode_r2rm concat(decode_r2rm_, SUFFIX)
 
+make_helper(concat(updateCPU_,SUFFIX)){
+	int len=(DATA_BYTE<<3)-1;
+	cpu.eflags.SF=eip>>len;
+	cpu.eflags.ZF=!eip;
+	eip ^= eip>>4;
+	eip ^= eip>>2;
+	eip ^= eip>>1;
+	cpu.eflags.PF=!(eip&1);
+	return 0;
+}
+
 /* Ib, Iv */
 make_helper(concat(decode_i_, SUFFIX)) {
 	/* eip here is pointing to the immediate */
@@ -32,9 +43,11 @@ make_helper(concat(decode_si_, SUFFIX)) {
 	 *
 	op_src->simm = ???
 	 */
-	panic("please implement me");
+	op_src->type=OP_TYPE_IMM;
+	op_src->simm=(DATA_TYPE_S)instr_fetch(eip,DATA_BYTE);
 
 	op_src->val = op_src->simm;
+	
 
 #ifdef DEBUG
 	snprintf(op_src->str, OP_STR_SIZE, "$0x%x", op_src->val);
