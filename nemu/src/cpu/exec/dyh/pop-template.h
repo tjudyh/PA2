@@ -2,10 +2,9 @@
 
 #define instr pop
 
-void do_execute()
-{
-	OPERAND_W(op_src, MEM_R(reg_l(R_ESP)));
-	reg_l (R_ESP) += DATA_BYTE;
+void do_execute(){
+	OPERAND_W(op_src,MEM_R(reg_l(R_ESP)));
+	reg_l(R_ESP)+=DATA_BYTE;
 	print_asm_template1();
 }
 

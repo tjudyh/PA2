@@ -1,11 +1,9 @@
 #include "cpu/exec/template-start.h"
-
 #define instr test
 
-void do_execute()
-{
-	cpu.OF = cpu.CF = 0;
-	concat(updateCPU_, SUFFIX)((DATA_TYPE)(op_dest->val & op_src->val));
+void do_execute(){
+	cpu.eflags.OF=cpu.eflags.CF=0;
+	concat(updateCPU_,SUFFIX)((DATA_TYPE)(op_dest->val&op_src->val));
 	print_asm_template2();
 }
 
