@@ -7,7 +7,7 @@
 #include <sys/types.h>
 #include <regex.h>
 #include <stdlib.h>
-
+uint32_t look_up_symtab(char*,bool*);
 enum {
 	NOTYPE = 256, EQ
 
@@ -190,6 +190,9 @@ static uint32_t eval(int s, int e, bool *success) {
 					  break;
 
 			case NUM: val = strtol(tokens[s].str, NULL, 0); break;
+			case VAR: val=look_up_symtab(tokens[s].str,success);
+				if(!*success) return 0;
+				break;
 			default: assert(0);
 		}
 
