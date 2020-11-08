@@ -53,4 +53,7 @@
 #include "dyh/lods.h"
 #include "dyh/scas.h"
 #include "dyh/stos.h"
-
+#include "dyh/movzb.h"
+#include "dyh/movsb.h"
+#include "dyh/movsw.h"
+#include "dyh/movzw.h"
