@@ -8,6 +8,7 @@ static char *strtab = NULL;
 static Elf32_Sym *symtab = NULL;
 static int nr_symtab_entry;
 
+
 void load_elf_tables(int argc, char *argv[]) {
 	int ret;
 	Assert(argc == 2, "run NEMU with format 'nemu [program]'");
@@ -79,5 +80,20 @@ void load_elf_tables(int argc, char *argv[]) {
 	assert(strtab != NULL && symtab != NULL);
 
 	fclose(fp);
+}
+
+
+const char* find_fun_name(uint32_t eip) {
+	static const char not_found[] = "???";
+
+	int i;
+	for(i = 0; i < nr_symtab_entry; i ++) {
+		if(ELF32_ST_TYPE(symtab[i].st_info) == STT_FUNC && 
+				eip >= symtab[i].st_value && eip < symtab[i].st_value + symtab[i].st_size) {
+			return strtab + symtab[i].st_name;
+		}
+	}
+
+	return not_found;
 }
 
